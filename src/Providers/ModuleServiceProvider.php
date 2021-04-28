@@ -4,6 +4,7 @@ namespace Dptsi\Modular\Providers;
 
 use Dptsi\Modular\Base\Module;
 use Dptsi\Modular\Console\ModuleMakeCommand;
+use Dptsi\Modular\Console\ModuleProvideRouteCommand;
 use Dptsi\Modular\Exception\InvalidModuleClass;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
@@ -47,6 +48,7 @@ class ModuleServiceProvider extends ServiceProvider
             $this->commands(
                 [
                     ModuleMakeCommand::class,
+                    ModuleProvideRouteCommand::class,
                 ]
             );
         }

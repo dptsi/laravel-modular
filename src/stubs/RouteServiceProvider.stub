@@ -1,0 +1,22 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\ServiceProvider;
+
+class RouteServiceProvider extends ServiceProvider
+{
+    protected string $module_name = '{{ module_name }}';
+
+    public function register()
+    {
+        Route::prefix('api/' . $this->module_name)
+            ->middleware('api')
+            ->group(__DIR__ . '/config/routes/api.php');
+
+        Route::middleware('web')
+            ->prefix("{$this->module_name}")
+            ->group(__DIR__ . '/config/routes/web.php');
+    }
+}
