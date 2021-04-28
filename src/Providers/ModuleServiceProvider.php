@@ -6,6 +6,7 @@ use Dptsi\Modular\Base\Module;
 use Dptsi\Modular\Console\ModuleMakeCommand;
 use Dptsi\Modular\Console\ModuleProvideDatabaseCommand;
 use Dptsi\Modular\Console\ModuleProvideRouteCommand;
+use Dptsi\Modular\Console\ModuleProvideViewCommand;
 use Dptsi\Modular\Exception\InvalidModuleClass;
 use Dptsi\Modular\Facade\Manager;
 use Dptsi\Modular\Facade\ModuleManager;
@@ -53,6 +54,7 @@ class ModuleServiceProvider extends ServiceProvider
                     ModuleMakeCommand::class,
                     ModuleProvideRouteCommand::class,
                     ModuleProvideDatabaseCommand::class,
+                    ModuleProvideViewCommand::class,
                 ]
             );
         }

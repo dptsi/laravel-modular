@@ -11,6 +11,7 @@ class Module extends BaseModule
         return [
             \DummyNamespace\Providers\RouteServiceProvider::class,
             \DummyNamespace\Providers\DatabaseServiceProvider::class,
+            \DummyNamespace\Providers\ViewServiceProvider::class,
         ];
     }
 }

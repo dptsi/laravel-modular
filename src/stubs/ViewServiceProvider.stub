@@ -1,0 +1,17 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
+
+class ViewServiceProvider extends ServiceProvider
+{
+    protected string $module_name = '{{ module_name }}';
+    protected string $view_path = 'views';
+
+    public function register()
+    {
+        View::addNamespace($this->module_name, __DIR__ . '/' . $this->view_path);
+    }
+}
