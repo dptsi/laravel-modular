@@ -1,0 +1,25 @@
+{
+  "name": "dptsi/laravel-modular",
+  "description": "Laravel modular template developed for DPTSI projects",
+  "type": "project",
+  "authors": [
+    {
+      "name": "DPTSI ITS",
+      "email": "mobile@its.ac.id"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Dptsi\\Modular\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Dptsi\\Modular\\Providers\\ModuleServiceProvider"
+      ]
+    }
+  }
+}
