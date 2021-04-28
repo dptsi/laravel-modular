@@ -13,4 +13,12 @@ abstract class Module
     {
         return [];
     }
+
+    /**
+     * @return array{?string, ?string}
+     */
+    public function getDefaultControllerAction(): array
+    {
+        return [null, null];
+    }
 }
