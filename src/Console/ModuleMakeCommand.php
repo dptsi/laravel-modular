@@ -13,6 +13,8 @@ class ModuleMakeCommand extends GeneratorCommand
 
     protected $description = 'Create new module';
 
+    protected $type = 'Module';
+
     protected function replaceClass($stub, $name)
     {
         return $stub;
@@ -28,9 +30,14 @@ class ModuleMakeCommand extends GeneratorCommand
         return $this->laravel['path'] . '/Modules/' . $name . '/Module.php';
     }
 
+    protected function getNamespace($name)
+    {
+        return parent::getNamespace($name) . '\\' . $name;
+    }
+
     protected function rootNamespace()
     {
-        return parent::rootNamespace() . '\\Modules';
+        return parent::rootNamespace() . 'Modules';
     }
 
     protected function getArguments()
