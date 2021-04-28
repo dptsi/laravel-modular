@@ -2,6 +2,7 @@
   "name": "dptsi/laravel-modular",
   "description": "Laravel modular template developed for DPTSI projects",
   "type": "library",
+  "version": "1.0.0",
   "authors": [
     {
       "name": "DPTSI ITS",
