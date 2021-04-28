@@ -7,6 +7,8 @@ use Dptsi\Modular\Console\ModuleMakeCommand;
 use Dptsi\Modular\Console\ModuleProvideDatabaseCommand;
 use Dptsi\Modular\Console\ModuleProvideRouteCommand;
 use Dptsi\Modular\Exception\InvalidModuleClass;
+use Dptsi\Modular\Facade\Manager;
+use Dptsi\Modular\Facade\ModuleManager;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
@@ -19,7 +21,7 @@ class ModuleServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton('module_manager', Manager::class);
     }
 
     /**
@@ -67,6 +69,8 @@ class ModuleServiceProvider extends ServiceProvider
             if (!($module instanceof Module)) {
                 throw new InvalidModuleClass();
             }
+
+            ModuleManager::register($module_name, $module);
 
             foreach ($module->getProviders() as $provider) {
                 App::register($provider);
