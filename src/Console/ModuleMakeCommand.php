@@ -7,6 +7,7 @@ namespace Dptsi\Modular\Console;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class ModuleMakeCommand extends GeneratorCommand
 {
@@ -50,12 +51,26 @@ class ModuleMakeCommand extends GeneratorCommand
         ];
     }
 
+    protected function getOptions()
+    {
+        return [
+            [
+                'skeleton',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Folder structure to be applied to the module',
+                'mvc',
+            ],
+        ];
+    }
+
     public function handle()
     {
         $this->call(
             'module:provide-route',
             [
                 'name' => $this->argument('name'),
+                '--skeleton' => $this->option('skeleton'),
             ]
         );
         $this->call(
@@ -68,18 +83,21 @@ class ModuleMakeCommand extends GeneratorCommand
             'module:provide-view',
             [
                 'name' => $this->argument('name'),
+                '--skeleton' => $this->option('skeleton'),
             ]
         );
         $this->call(
             'module:provide-lang',
             [
                 'name' => $this->argument('name'),
+                '--skeleton' => $this->option('skeleton'),
             ]
         );
         $this->call(
             'module:provide-blade',
             [
                 'name' => $this->argument('name'),
+                '--skeleton' => $this->option('skeleton'),
             ]
         );
         $this->call(

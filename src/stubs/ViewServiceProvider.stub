@@ -8,7 +8,7 @@ use Illuminate\Support\ServiceProvider;
 class ViewServiceProvider extends ServiceProvider
 {
     protected string $module_name = '{{ module_name }}';
-    protected string $view_path = 'views';
+    protected string $view_path = '../resources/views';
 
     public function boot()
     {

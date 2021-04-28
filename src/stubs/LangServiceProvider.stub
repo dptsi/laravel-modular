@@ -8,7 +8,7 @@ use Illuminate\Support\ServiceProvider;
 class LangServiceProvider extends ServiceProvider
 {
     protected string $module_name = '{{ module_name }}';
-    protected string $lang_path = '../config/lang';
+    protected string $lang_path = '../resources/lang';
 
     public function boot()
     {
