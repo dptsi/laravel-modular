@@ -30,7 +30,13 @@ class Manager
     /**
      * @return array<string, Module>
      */
-    public function all(): array {
+    public function all(): array
+    {
         return $this->modules;
+    }
+
+    public function path(string $module_directory_name, string $path): string
+    {
+        return app_path('Modules/' . $module_directory_name . '/' . $path);
     }
 }
