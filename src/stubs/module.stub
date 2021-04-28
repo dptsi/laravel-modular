@@ -1,0 +1,13 @@
+<?php
+
+namespace DummyNamespace;
+
+use Dptsi\Modular\Base\Module as BaseModule;
+
+class Module extends BaseModule
+{
+    public function getProviders(): array
+    {
+        return [];
+    }
+}
