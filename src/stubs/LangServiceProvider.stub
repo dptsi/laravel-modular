@@ -1,0 +1,17 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\ServiceProvider;
+
+class LangServiceProvider extends ServiceProvider
+{
+    protected string $module_name = '{{ module_name }}';
+    protected string $lang_path = '../config/lang';
+
+    public function register()
+    {
+        Lang::addNamespace($this->module_name, __DIR__ . '/' . $this->lang_path);
+    }
+}

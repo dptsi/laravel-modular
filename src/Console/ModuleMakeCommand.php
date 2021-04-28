@@ -70,6 +70,12 @@ class ModuleMakeCommand extends GeneratorCommand
                 'name' => $this->argument('name'),
             ]
         );
+        $this->call(
+            'module:provide-lang',
+            [
+                'name' => $this->argument('name'),
+            ]
+        );
         return parent::handle();
     }
 }
