@@ -76,6 +76,12 @@ class ModuleMakeCommand extends GeneratorCommand
                 'name' => $this->argument('name'),
             ]
         );
+        $this->call(
+            'module:provide-blade',
+            [
+                'name' => $this->argument('name'),
+            ]
+        );
         return parent::handle();
     }
 }

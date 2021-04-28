@@ -4,6 +4,7 @@ namespace Dptsi\Modular\Providers;
 
 use Dptsi\Modular\Base\Module;
 use Dptsi\Modular\Console\ModuleMakeCommand;
+use Dptsi\Modular\Console\ModuleProvideBladeCommand;
 use Dptsi\Modular\Console\ModuleProvideDatabaseCommand;
 use Dptsi\Modular\Console\ModuleProvideLangCommand;
 use Dptsi\Modular\Console\ModuleProvideRouteCommand;
@@ -57,6 +58,7 @@ class ModuleServiceProvider extends ServiceProvider
                     ModuleProvideDatabaseCommand::class,
                     ModuleProvideViewCommand::class,
                     ModuleProvideLangCommand::class,
+                    ModuleProvideBladeCommand::class,
                 ]
             );
         }

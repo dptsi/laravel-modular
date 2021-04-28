@@ -1,0 +1,21 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\ServiceProvider;
+
+class BladeServiceProvider extends ServiceProvider
+{
+    protected string $module_name = '{{ module_name }}';
+
+    public function register()
+    {
+        Blade::componentNamespace($this->getNamespace(), $this->module_name);
+    }
+
+    public function getNamespace(): string
+    {
+        return "App\\Modules\\{$this->module_name}\\Components";
+    }
+}
