@@ -5,6 +5,7 @@ namespace Dptsi\Modular\Console;
 
 
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 
 class ModuleMakeCommand extends GeneratorCommand
@@ -27,17 +28,19 @@ class ModuleMakeCommand extends GeneratorCommand
 
     protected function getPath($name)
     {
-        return $this->laravel['path'] . '/Modules/' . $name . '/Module.php';
+        $name = Str::replaceFirst($this->rootNamespace(), '', $name);
+
+        return $this->laravel['path'] . '/' . str_replace('\\', '/', $name) . '/Module.php';
+    }
+
+    protected function getDefaultNamespace($rootNamespace)
+    {
+        return parent::getDefaultNamespace($rootNamespace) . '\\Modules';
     }
 
     protected function getNamespace($name)
     {
-        return parent::getNamespace($name) . '\\' . $name;
-    }
-
-    protected function rootNamespace()
-    {
-        return parent::rootNamespace() . 'Modules';
+        return $name;
     }
 
     protected function getArguments()
