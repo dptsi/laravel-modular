@@ -7,6 +7,7 @@ namespace Dptsi\Modular\Console;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class ModuleProvideLangCommand extends GeneratorCommand
 {
@@ -49,4 +50,18 @@ class ModuleProvideLangCommand extends GeneratorCommand
             ['name', InputArgument::REQUIRED, 'The name of the module'],
         ];
     }
+
+    protected function getOptions()
+    {
+        return [
+            [
+                'skeleton',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Folder structure to be applied to the module',
+                'mvc',
+            ],
+        ];
+    }
+
 }

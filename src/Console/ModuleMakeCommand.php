@@ -4,6 +4,7 @@
 namespace Dptsi\Modular\Console;
 
 
+use Dptsi\Modular\Facade\ModuleManager;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
@@ -66,6 +67,13 @@ class ModuleMakeCommand extends GeneratorCommand
 
     public function handle()
     {
+        $this->prepareProviders();
+        $this->copySkeleton();
+        return parent::handle();
+    }
+
+    private function prepareProviders(): void
+    {
         $this->call(
             'module:provide-route',
             [
@@ -106,6 +114,16 @@ class ModuleMakeCommand extends GeneratorCommand
                 'name' => $this->argument('name'),
             ]
         );
-        return parent::handle();
+    }
+
+    private function copySkeleton(): void
+    {
+        $skeleton_dir = __DIR__ . '/../Skeleton/' . Str::studly($this->option('skeleton'));
+        $module_path = ModuleManager::path($this->argument('name'), '');
+        foreach (scandir($skeleton_dir) as $dir) {
+            if (in_array($dir, ['.', '..'])) continue;
+            $source_dir = $skeleton_dir . '/' . $dir;
+            $this->files->copyDirectory($source_dir, $module_path . '/' . $dir);
+        }
     }
 }
