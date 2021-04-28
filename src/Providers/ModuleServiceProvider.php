@@ -73,7 +73,7 @@ class ModuleServiceProvider extends ServiceProvider
                 continue;
             }
 
-            $module = new $module_properties['moduleClass'];
+            $module = new $module_properties['module_class']($module_properties, $module_name == config('modules.default_module'));
             if (!($module instanceof Module)) {
                 throw new InvalidModuleClass();
             }
