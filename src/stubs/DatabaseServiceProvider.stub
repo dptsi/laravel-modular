@@ -1,0 +1,23 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Database\Connectors\ConnectionFactory;
+use Illuminate\Support\ServiceProvider;
+
+class DatabaseServiceProvider extends ServiceProvider
+{
+    protected string $module_name = '{{ module_name }}';
+
+    public function register()
+    {
+        $this->app->bind(
+            'db.' . $this->module_name,
+            function () {
+                /** @var ConnectionFactory $factory */
+                $factory = $this->app->make('db.factory');
+                $factory->make(config($this->module_name . '/database'));
+            }
+        );
+    }
+}
