@@ -10,7 +10,7 @@ class RouteServiceProvider extends ServiceProvider
     protected string $module_name = '{{ module_name }}';
     protected string $route_path = 'routes';
 
-    public function register()
+    public function boot()
     {
         Route::prefix('api/' . $this->module_name)
             ->middleware('api')
