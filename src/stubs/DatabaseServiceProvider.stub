@@ -2,7 +2,6 @@
 
 namespace DummyNamespace;
 
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
 class DatabaseServiceProvider extends ServiceProvider
@@ -15,14 +14,6 @@ class DatabaseServiceProvider extends ServiceProvider
 
     protected function boot()
     {
-        Config::set(
-            'database.connections',
-            array_merge(
-                config('database.connections'),
-                [
-                    $this->module_name => config($this->module_name . '.database'),
-                ]
-            )
-        );
+        config(['database.connections.' . $this->module_name => config($this->module_name . '.database')]);
     }
 }
