@@ -14,7 +14,7 @@ class ModuleProvideRouteCommand extends GeneratorCommand
 
     protected $description = 'Generate route service provider for a module';
 
-    protected $type = 'Provider';
+    protected $type = 'Route service provider';
 
     protected function replaceClass($stub, $name)
     {
