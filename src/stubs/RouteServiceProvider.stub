@@ -8,15 +8,16 @@ use Illuminate\Support\ServiceProvider;
 class RouteServiceProvider extends ServiceProvider
 {
     protected string $module_name = '{{ module_name }}';
+    protected string $route_path = 'routes';
 
     public function register()
     {
         Route::prefix('api/' . $this->module_name)
             ->middleware('api')
-            ->group(__DIR__ . '/config/routes/api.php');
+            ->group(__DIR__ . '/' . $this->route_path . '/api.php');
 
         Route::middleware('web')
             ->prefix("{$this->module_name}")
-            ->group(__DIR__ . '/config/routes/web.php');
+            ->group(__DIR__ . '/' . $this->route_path . '/web.php');
     }
 }
