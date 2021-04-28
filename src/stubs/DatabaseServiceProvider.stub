@@ -2,7 +2,7 @@
 
 namespace DummyNamespace;
 
-use Illuminate\Database\Connectors\ConnectionFactory;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
 class DatabaseServiceProvider extends ServiceProvider
@@ -11,13 +11,18 @@ class DatabaseServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->bind(
-            'db.' . $this->module_name,
-            function () {
-                /** @var ConnectionFactory $factory */
-                $factory = $this->app->make('db.factory');
-                return $factory->make(config($this->module_name . '.database'));
-            }
+    }
+
+    protected function boot()
+    {
+        Config::set(
+            'database.connections',
+            array_merge(
+                config('database.connections'),
+                [
+                    $this->module_name => config($this->module_name . '.database'),
+                ]
+            )
         );
     }
 }
