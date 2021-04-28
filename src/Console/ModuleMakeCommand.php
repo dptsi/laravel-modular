@@ -82,6 +82,12 @@ class ModuleMakeCommand extends GeneratorCommand
                 'name' => $this->argument('name'),
             ]
         );
+        $this->call(
+            'module:provide-dependency',
+            [
+                'name' => $this->argument('name'),
+            ]
+        );
         return parent::handle();
     }
 }

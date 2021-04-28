@@ -1,0 +1,13 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Support\ServiceProvider;
+
+class DependencyServiceProvider extends ServiceProvider
+{
+    public function register()
+    {
+//        $this->app->bind();
+    }
+}
