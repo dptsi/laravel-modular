@@ -16,7 +16,7 @@ class DatabaseServiceProvider extends ServiceProvider
             function () {
                 /** @var ConnectionFactory $factory */
                 $factory = $this->app->make('db.factory');
-                $factory->make(config($this->module_name . '.database'));
+                return $factory->make(config($this->module_name . '.database'));
             }
         );
     }
