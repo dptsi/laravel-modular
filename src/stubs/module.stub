@@ -8,6 +8,8 @@ class Module extends BaseModule
 {
     public function getProviders(): array
     {
-        return [];
+        return [
+            \DummyNamespace\Providers\RouteServiceProvider::class,
+        ];
     }
 }
