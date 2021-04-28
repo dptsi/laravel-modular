@@ -5,7 +5,6 @@ namespace Dptsi\Modular\Console;
 
 
 use Illuminate\Console\GeneratorCommand;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -53,8 +52,14 @@ class ModuleMakeCommand extends GeneratorCommand
 
     public function handle()
     {
-        Artisan::call(
+        $this->call(
             'module:provide-route',
+            [
+                'name' => $this->argument('name'),
+            ]
+        );
+        $this->call(
+            'module:provide-database',
             [
                 'name' => $this->argument('name'),
             ]
