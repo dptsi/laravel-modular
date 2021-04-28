@@ -1,0 +1,27 @@
+{
+    "name": "dptsi/laravel-modular",
+    "description": "Laravel modular template developed for DPTSI projects",
+    "type": "project",
+    "authors": [
+        {
+            "name": "DPTSI ITS",
+            "email": "mobile@its.ac.id"
+        },
+        {
+            "name": "Setya Wibawa",
+            "email": "durianpeople@gmail.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Ersad Ishlahuddin",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Dptsi\\Modular\\": "src/"
+        }
+    }
+}
