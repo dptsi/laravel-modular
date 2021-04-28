@@ -23,9 +23,14 @@ class ModuleMakeCommand extends GeneratorCommand
         return __DIR__ . '/../stubs/module.stub';
     }
 
-    protected function getNamespace($name)
+    protected function getPath($name)
     {
-        return $this->rootNamespace() . '\\Modules\\' . $name;
+        return $this->laravel['path'] . '/Modules/' . $name . '/Module.php';
+    }
+
+    protected function rootNamespace()
+    {
+        return parent::rootNamespace() . '\\Modules';
     }
 
     protected function getArguments()
