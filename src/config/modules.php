@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'defaultModule' => null,
+    'default_module' => null,
     'modules' => [
 //        'module_name' => [
-//            'moduleClass' => 'Namespace\To\Module',
+//            'module_class' => 'Namespace\To\Module',
 //            'enabled' => false,
 //        ]
     ],
