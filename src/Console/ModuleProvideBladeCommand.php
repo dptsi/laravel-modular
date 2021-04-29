@@ -19,6 +19,20 @@ class ModuleProvideBladeCommand extends GeneratorCommand
 
     protected function replaceClass($stub, $name)
     {
+        $namespace = null;
+        switch ($this->option('skeleton')) {
+            case 'onion':
+                $namespace = 'App\\\\Modules\\\\' . Str::studly($this->argument('name')) . '\\\\Presentation\\\\Components';
+                break;
+            case 'mvc':
+            default:
+                $namespace = 'App\\\\Modules\\\\' . Str::studly($this->argument('name')) . '\\\\View\\\\Components';
+        }
+        $stub = str_replace(
+            ['{{ SkeletonNamespace }}'],
+            $namespace,
+            $stub
+        );
         return str_replace(['{{ module_name }}'], Str::studly($this->argument('name')), $stub);
     }
 
@@ -62,6 +76,16 @@ class ModuleProvideBladeCommand extends GeneratorCommand
                 'mvc',
             ],
         ];
+    }
+
+    public function handle()
+    {
+        if (!in_array($this->option('skeleton'), ['onion', 'mvc'])) {
+            $this->error('Skeleton type is not registered');
+            return false;
+        }
+
+        return parent::handle();
     }
 
 }

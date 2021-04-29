@@ -67,6 +67,10 @@ class ModuleMakeCommand extends GeneratorCommand
 
     public function handle()
     {
+        if (!in_array($this->option('skeleton'), ['onion', 'mvc'])) {
+            $this->error('Skeleton type is not registered');
+            return false;
+        }
         $this->prepareProviders();
         $this->copySkeleton();
         return parent::handle();

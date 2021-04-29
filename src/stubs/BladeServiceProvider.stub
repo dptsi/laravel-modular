@@ -16,6 +16,6 @@ class BladeServiceProvider extends ServiceProvider
 
     public function getNamespace(): string
     {
-        return "App\\Modules\\{$this->module_name}\\View\\Components";
+        return "{{ SkeletonNamespace }}";
     }
 }
