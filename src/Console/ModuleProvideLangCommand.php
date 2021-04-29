@@ -19,6 +19,18 @@ class ModuleProvideLangCommand extends GeneratorCommand
 
     protected function replaceClass($stub, $name)
     {
+        $lang_path = null;
+        switch ($this->option('skeleton')) {
+            case 'onion':
+                $lang_path = '../Presentation/lang';
+                break;
+            case 'mvc':
+                $lang_path = '../resources/lang';
+            default:
+        }
+
+        $stub = str_replace(['{{ lang_path }}'], $lang_path, $stub);
+
         return str_replace(['{{ module_name }}'], Str::studly($this->argument('name')), $stub);
     }
 
@@ -64,4 +76,13 @@ class ModuleProvideLangCommand extends GeneratorCommand
         ];
     }
 
+    public function handle()
+    {
+        if (!in_array($this->option('skeleton'), ['onion', 'mvc'])) {
+            $this->error('Skeleton type is not registered');
+            return false;
+        }
+
+        return parent::handle();
+    }
 }
