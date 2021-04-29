@@ -57,14 +57,14 @@ class ModuleMakeCommand extends GeneratorCommand
         return [
             [
                 'skeleton',
-                null,
+                'S',
                 InputOption::VALUE_OPTIONAL,
                 'Folder structure to be applied to the module',
                 'mvc',
             ],
             [
                 'database',
-                null,
+                'D',
                 InputOption::VALUE_OPTIONAL,
                 'Database driver to be applied to the module',
                 'sqlsrv',
