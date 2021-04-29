@@ -19,6 +19,18 @@ class ModuleProvideRouteCommand extends GeneratorCommand
 
     protected function replaceClass($stub, $name)
     {
+        $route_path = null;
+        switch ($this->option('skeleton')) {
+            case 'onion':
+                $route_path = '../Presentation/routes';
+                break;
+            case 'mvc':
+                $route_path = '../routes';
+            default:
+        }
+
+        $stub = str_replace(['{{ route_path }}'], $route_path, $stub);
+
         return str_replace(['{{ module_name }}'], Str::snake($this->argument('name')), $stub);
     }
 
@@ -62,6 +74,16 @@ class ModuleProvideRouteCommand extends GeneratorCommand
                 'mvc',
             ],
         ];
+    }
+
+    public function handle()
+    {
+        if (!in_array($this->option('skeleton'), ['onion', 'mvc'])) {
+            $this->error('Skeleton type is not registered');
+            return false;
+        }
+
+        return parent::handle();
     }
 
 }

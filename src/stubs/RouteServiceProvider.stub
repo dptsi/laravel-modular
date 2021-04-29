@@ -8,7 +8,7 @@ use Illuminate\Support\ServiceProvider;
 class RouteServiceProvider extends ServiceProvider
 {
     protected string $module_name = '{{ module_name }}';
-    protected string $route_path = '../routes';
+    protected string $route_path = '{{ route_path }}';
 
     public function boot()
     {
