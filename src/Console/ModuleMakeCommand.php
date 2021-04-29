@@ -84,6 +84,7 @@ class ModuleMakeCommand extends GeneratorCommand
         }
         $this->prepareProviders();
         $this->copySkeleton();
+        $this->createModuleConfig();
         return parent::handle();
     }
 
@@ -141,5 +142,40 @@ class ModuleMakeCommand extends GeneratorCommand
             $source_dir = $skeleton_dir . '/' . $dir;
             $this->files->copyDirectory($source_dir, $module_path . '/' . $dir);
         }
+    }
+
+    private function createModuleConfig(): void
+    {
+        if (!$this->files->isFile(config_path('modules.php')))
+            $this->files->copy(__DIR__ . '/../config/modules.php', config_path('modules.php'));
+
+        $module_config = require config_path('modules.php');
+
+        $module_config['modules'][Str::snake($this->argument('name'))] = [
+            'module_class' => 'App\\Modules\\'.Str::studly($this->argument('name')).'\\Module',
+            'enabled' => true,
+        ];
+
+        ob_start();
+        echo "<?php\n\n";
+        echo "return [\n";
+        if ($module_config['default_module']) {
+            echo "\n\t'default_module' => '{$module_config['default_module']}',";
+        } else {
+            echo "\n\t'default_module' => null,";
+        }
+        echo "\n\t'modules' => [";
+        foreach ($module_config['modules'] as $key => $value) {
+            echo "\n\t\t'{$key}' => [";
+                echo "\n\t\t\t'module_class' => '{$value['module_class']}',";
+                echo "\n\t\t\t'enabled' => {$value['enabled']},";
+            echo "\n\t\t],";
+        }
+        echo "\n\t],\n];";
+        $output = ob_get_clean();
+
+        $this->files->put(
+            config_path('modules.php'), $output
+        );
     }
 }
