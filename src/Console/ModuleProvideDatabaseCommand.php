@@ -7,6 +7,7 @@ namespace Dptsi\Modular\Console;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class ModuleProvideDatabaseCommand extends GeneratorCommand
 {
@@ -50,14 +51,46 @@ class ModuleProvideDatabaseCommand extends GeneratorCommand
         ];
     }
 
+    protected function getOptions()
+    {
+        return [
+            [
+                'database',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Database driver to be applied to the module',
+                'sqlsrv',
+            ],
+        ];
+    }
+
     public function handle()
     {
+        if (!in_array($this->option('database'), ['sqlsrv', 'mysql'])) {
+            $this->error('Database driver is not registered');
+            return false;
+        }
+
         $module_snake_name = Str::snake($this->argument('name'));
+
         $this->files->ensureDirectoryExists(config_path($module_snake_name));
 
-        $this->files->copy(
-            __DIR__ . '/../config/module.database.php',
-            config_path($module_snake_name . '/database.php')
+        switch ($this->option('database')) {
+            case 'mysql':
+                $stub = $this->files->get(__DIR__ . '/../stubs/module.database.mysql.stub');
+                break;
+            case 'sqlsrv':
+            default:
+                $stub = $this->files->get(__DIR__ . '/../stubs/module.database.sqlsrv.stub');
+        }
+
+        $stub = str_replace(
+            ['{{ module_name }}'],
+            Str::upper($module_snake_name), $stub
+        );
+
+        $this->files->put(
+            config_path($module_snake_name . '/database.php'), $stub
         );
 
         return parent::handle();

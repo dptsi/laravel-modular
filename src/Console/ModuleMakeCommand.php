@@ -62,6 +62,13 @@ class ModuleMakeCommand extends GeneratorCommand
                 'Folder structure to be applied to the module',
                 'mvc',
             ],
+            [
+                'database',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Database driver to be applied to the module',
+                'sqlsrv',
+            ],
         ];
     }
 
@@ -69,6 +76,10 @@ class ModuleMakeCommand extends GeneratorCommand
     {
         if (!in_array($this->option('skeleton'), ['onion', 'mvc'])) {
             $this->error('Skeleton type is not registered');
+            return false;
+        }
+        if (!in_array($this->option('database'), ['sqlsrv', 'mysql'])) {
+            $this->error('Database driver is not registered');
             return false;
         }
         $this->prepareProviders();
@@ -89,6 +100,7 @@ class ModuleMakeCommand extends GeneratorCommand
             'module:provide-database',
             [
                 'name' => $this->argument('name'),
+                '--database' => $this->option('database'),
             ]
         );
         $this->call(
