@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Dptsi\Modular\Facade;
+namespace Dptsi\Modular\Core;
 
 
 use Dptsi\Modular\Base\Module;

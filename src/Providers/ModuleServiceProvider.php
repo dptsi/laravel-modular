@@ -4,15 +4,18 @@ namespace Dptsi\Modular\Providers;
 
 use Dptsi\Modular\Base\Module;
 use Dptsi\Modular\Console\ModuleMakeCommand;
+use Dptsi\Modular\Console\ModuleMessagingTableCommand;
 use Dptsi\Modular\Console\ModuleProvideBladeCommand;
 use Dptsi\Modular\Console\ModuleProvideDatabaseCommand;
 use Dptsi\Modular\Console\ModuleProvideDependencyCommand;
 use Dptsi\Modular\Console\ModuleProvideLangCommand;
 use Dptsi\Modular\Console\ModuleProvideRouteCommand;
 use Dptsi\Modular\Console\ModuleProvideViewCommand;
+use Dptsi\Modular\Core\Manager;
+use Dptsi\Modular\Event\EventManager;
 use Dptsi\Modular\Exception\InvalidModuleClass;
-use Dptsi\Modular\Facade\Manager;
 use Dptsi\Modular\Facade\ModuleManager;
+use Dptsi\Modular\Messaging\MessageBus;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,6 +29,8 @@ class ModuleServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('module_manager', Manager::class);
+        $this->app->singleton('event_manager', EventManager::class);
+        $this->app->singleton('message_bus', MessageBus::class);
     }
 
     /**
@@ -61,6 +66,7 @@ class ModuleServiceProvider extends ServiceProvider
                     ModuleProvideLangCommand::class,
                     ModuleProvideBladeCommand::class,
                     ModuleProvideDependencyCommand::class,
+                    ModuleMessagingTableCommand::class,
                 ]
             );
         }
@@ -73,7 +79,10 @@ class ModuleServiceProvider extends ServiceProvider
                 continue;
             }
 
-            $module = new $module_properties['module_class']($module_properties, $module_name == config('modules.default_module'));
+            $module = new $module_properties['module_class'](
+                $module_properties,
+                $module_name == config('modules.default_module')
+            );
             if (!($module instanceof Module)) {
                 throw new InvalidModuleClass();
             }
