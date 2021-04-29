@@ -12,7 +12,8 @@
   "minimum-stability": "dev",
   "require": {
     "php": "^7.4",
-    "ext-pdo": "*"
+    "ext-pdo": "*",
+    "laravel/framework": "^8.12"
   },
   "autoload": {
     "psr-4": {
