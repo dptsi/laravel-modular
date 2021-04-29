@@ -13,7 +13,7 @@ class DatabaseServiceProvider extends ServiceProvider
     {
     }
 
-    protected function boot()
+    public function boot()
     {
         Config::set(
             'database.connections.' . $this->module_name,
