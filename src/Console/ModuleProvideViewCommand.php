@@ -19,6 +19,18 @@ class ModuleProvideViewCommand extends GeneratorCommand
 
     protected function replaceClass($stub, $name)
     {
+        $view_path = null;
+        switch ($this->option('skeleton')) {
+            case 'onion':
+                $view_path = '../Presentation/views';
+                break;
+            case 'mvc':
+                $view_path = '../resources/views';
+            default:
+        }
+
+        $stub = str_replace(['{{ view_path }}'], $view_path, $stub);
+
         return str_replace(['{{ module_name }}'], Str::studly($this->argument('name')), $stub);
     }
 
@@ -64,4 +76,13 @@ class ModuleProvideViewCommand extends GeneratorCommand
         ];
     }
 
+    public function handle()
+    {
+        if (!in_array($this->option('skeleton'), ['onion', 'mvc'])) {
+            $this->error('Skeleton type is not registered');
+            return false;
+        }
+
+        return parent::handle();
+    }
 }
