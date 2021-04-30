@@ -1,0 +1,16 @@
+<?php
+
+return [
+    'driver' => 'pgsql',
+    'url' => env('{{ module_name }}_DATABASE_URL'),
+    'host' => env('{{ module_name }}_DB_HOST', '127.0.0.1'),
+    'port' => env('{{ module_name }}_DB_PORT', '5432'),
+    'database' => env('{{ module_name }}_DB_DATABASE', 'forge'),
+    'username' => env('{{ module_name }}_DB_USERNAME', 'forge'),
+    'password' => env('{{ module_name }}_DB_PASSWORD', ''),
+    'charset' => 'utf8',
+    'prefix' => '',
+    'prefix_indexes' => true,
+    'schema' => 'public',
+    'sslmode' => 'prefer',
+];

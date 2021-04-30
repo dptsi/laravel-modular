@@ -78,7 +78,7 @@ class ModuleMakeCommand extends GeneratorCommand
             $this->error('Skeleton type is not registered');
             return false;
         }
-        if (!in_array($this->option('database'), ['sqlsrv', 'mysql'])) {
+        if (!in_array($this->option('database'), ['sqlsrv', 'mysql', 'pgsql'])) {
             $this->error('Database driver is not registered');
             return false;
         }

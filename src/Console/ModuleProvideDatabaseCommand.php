@@ -66,7 +66,7 @@ class ModuleProvideDatabaseCommand extends GeneratorCommand
 
     public function handle()
     {
-        if (!in_array($this->option('database'), ['sqlsrv', 'mysql'])) {
+        if (!in_array($this->option('database'), ['sqlsrv', 'mysql', 'pgsql'])) {
             $this->error('Database driver is not registered');
             return false;
         }
@@ -78,6 +78,9 @@ class ModuleProvideDatabaseCommand extends GeneratorCommand
         switch ($this->option('database')) {
             case 'mysql':
                 $stub = $this->files->get(__DIR__ . '/../stubs/module.database.mysql.stub');
+                break;
+            case 'pgsql':
+                $stub = $this->files->get(__DIR__ . '/../stubs/module.database.pgsql.stub');
                 break;
             case 'sqlsrv':
             default:
