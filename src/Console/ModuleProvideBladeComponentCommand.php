@@ -26,7 +26,7 @@ class ModuleProvideBladeComponentCommand extends GeneratorCommand
                 break;
             case 'mvc':
             default:
-                $namespace = 'App\\\\Modules\\\\' . Str::studly($this->argument('name')) . '\\\\View\\\\Components';
+                $namespace = 'App\\\\Modules\\\\' . Str::studly($this->argument('name')) . '\\\\Components';
         }
         $stub = str_replace(
             ['{{ SkeletonNamespace }}'],
