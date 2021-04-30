@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class ModuleProvideBladeCommand extends GeneratorCommand
+class ModuleProvideBladeComponentCommand extends GeneratorCommand
 {
     protected $name = 'module:provide-blade';
 
@@ -38,14 +38,14 @@ class ModuleProvideBladeCommand extends GeneratorCommand
 
     protected function getStub()
     {
-        return __DIR__ . '/../stubs/BladeServiceProvider.stub';
+        return __DIR__ . '/../stubs/BladeComponentServiceProvider.stub';
     }
 
     protected function getPath($name)
     {
         $name = Str::replaceFirst($this->rootNamespace(), '', $name);
 
-        return $this->laravel['path'] . '/' . str_replace('\\', '/', $name) . '/Providers/BladeServiceProvider.php';
+        return $this->laravel['path'] . '/' . str_replace('\\', '/', $name) . '/Providers/BladeComponentServiceProvider.php';
     }
 
     protected function getDefaultNamespace($rootNamespace)

@@ -5,7 +5,7 @@ namespace Dptsi\Modular\Providers;
 use Dptsi\Modular\Base\Module;
 use Dptsi\Modular\Console\ModuleMakeCommand;
 use Dptsi\Modular\Console\ModuleMessagingTableCommand;
-use Dptsi\Modular\Console\ModuleProvideBladeCommand;
+use Dptsi\Modular\Console\ModuleProvideBladeComponentCommand;
 use Dptsi\Modular\Console\ModuleProvideDatabaseCommand;
 use Dptsi\Modular\Console\ModuleProvideDependencyCommand;
 use Dptsi\Modular\Console\ModuleProvideEventCommand;
@@ -66,7 +66,7 @@ class ModuleServiceProvider extends ServiceProvider
                     ModuleProvideDatabaseCommand::class,
                     ModuleProvideViewCommand::class,
                     ModuleProvideLangCommand::class,
-                    ModuleProvideBladeCommand::class,
+                    ModuleProvideBladeComponentCommand::class,
                     ModuleProvideDependencyCommand::class,
                     ModuleMessagingTableCommand::class,
                     ModuleProvideEventCommand::class,

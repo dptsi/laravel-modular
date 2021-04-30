@@ -13,7 +13,7 @@ class Module extends BaseModule
             \DummyNamespace\Providers\DatabaseServiceProvider::class,
             \DummyNamespace\Providers\ViewServiceProvider::class,
             \DummyNamespace\Providers\LangServiceProvider::class,
-            \DummyNamespace\Providers\BladeServiceProvider::class,
+            \DummyNamespace\Providers\BladeComponentServiceProvider::class,
             \DummyNamespace\Providers\DependencyServiceProvider::class,
             \DummyNamespace\Providers\EventServiceProvider::class,
             \DummyNamespace\Providers\MessagingServiceProvider::class,

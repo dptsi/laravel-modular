@@ -5,7 +5,7 @@ namespace DummyNamespace;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
-class BladeServiceProvider extends ServiceProvider
+class BladeComponentServiceProvider extends ServiceProvider
 {
     protected string $module_name = '{{ module_name }}';
 
