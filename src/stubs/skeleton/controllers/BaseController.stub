@@ -1,0 +1,19 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Controller;
+
+class BaseController extends Controller
+{
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function index()
+    {
+        $message = __('{{ module_name }}::general.belajar');
+        return view('{{ module_name }}::welcome', compact('message'));
+    }
+}
