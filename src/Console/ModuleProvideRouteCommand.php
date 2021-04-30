@@ -31,7 +31,7 @@ class ModuleProvideRouteCommand extends GeneratorCommand
 
         $stub = str_replace(['{{ route_path }}'], $route_path, $stub);
 
-        return str_replace(['{{ module_name }}'], Str::snake($this->argument('name')), $stub);
+        return str_replace(['{{ module_name }}'], Str::kebab($this->argument('name')), $stub);
     }
 
     protected function getStub()
