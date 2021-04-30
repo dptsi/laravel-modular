@@ -77,14 +77,14 @@ class ModuleProvideDatabaseCommand extends GeneratorCommand
 
         switch ($this->option('database')) {
             case 'mysql':
-                $stub = $this->files->get(__DIR__ . '/../stubs/module.database.mysql.stub');
+                $stub = $this->files->get(__DIR__ . '/../stubs/database/module.database.mysql.stub');
                 break;
             case 'pgsql':
-                $stub = $this->files->get(__DIR__ . '/../stubs/module.database.pgsql.stub');
+                $stub = $this->files->get(__DIR__ . '/../stubs/database/module.database.pgsql.stub');
                 break;
             case 'sqlsrv':
             default:
-                $stub = $this->files->get(__DIR__ . '/../stubs/module.database.sqlsrv.stub');
+                $stub = $this->files->get(__DIR__ . '/../stubs/database/module.database.sqlsrv.stub');
         }
 
         $stub = str_replace(
