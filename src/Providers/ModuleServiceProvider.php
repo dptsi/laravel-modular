@@ -3,6 +3,7 @@
 namespace Dptsi\Modular\Providers;
 
 use Dptsi\Modular\Base\Module;
+use Dptsi\Modular\Console\ChangeAppNameCommand;
 use Dptsi\Modular\Console\ModuleMakeCommand;
 use Dptsi\Modular\Console\ModuleMessagingTableCommand;
 use Dptsi\Modular\Console\ModuleProvideBladeComponentCommand;
@@ -61,6 +62,7 @@ class ModuleServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands(
                 [
+                    ChangeAppNameCommand::class,
                     ModuleMakeCommand::class,
                     ModuleProvideRouteCommand::class,
                     ModuleProvideDatabaseCommand::class,

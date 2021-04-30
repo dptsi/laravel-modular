@@ -5,6 +5,7 @@ namespace Dptsi\Modular\Console;
 
 
 use Dptsi\Modular\Facade\ModuleManager;
+use Dptsi\Modular\Traits\AppNamespaceDetectorTrait;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
@@ -12,6 +13,8 @@ use Symfony\Component\Console\Input\InputOption;
 
 class ModuleMakeCommand extends GeneratorCommand
 {
+    use AppNamespaceDetectorTrait;
+
     protected $name = 'module:make';
 
     protected $description = 'Create new module';
@@ -165,7 +168,7 @@ class ModuleMakeCommand extends GeneratorCommand
         $module_config = require config_path('modules.php');
 
         $module_config['modules'][Str::snake($this->argument('name'))] = [
-            'module_class' => '\\App\\Modules\\'.Str::studly($this->argument('name')).'\\Module',
+            'module_class' => '\\' . $this->getAppNamespace() . 'Modules\\'.Str::studly($this->argument('name')).'\\Module',
             'enabled' => true,
         ];
 
