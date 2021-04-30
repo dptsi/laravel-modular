@@ -1,0 +1,21 @@
+<?php
+
+namespace DummyNamespace;
+
+use Dptsi\Modular\Facade\Messaging;
+use Illuminate\Support\ServiceProvider;
+
+class MessagingServiceProvider extends ServiceProvider
+{
+    protected string $module_name = '{{ module_name }}';
+
+    public function register()
+    {
+    }
+
+    public function boot()
+    {
+        Messaging::setChannel('{{ module_name }}');
+//        Messaging::listenTo();
+    }
+}

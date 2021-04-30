@@ -138,6 +138,12 @@ class ModuleMakeCommand extends GeneratorCommand
                 '--skeleton' => $this->option('skeleton'),
             ]
         );
+        $this->call(
+            'module:provide-messaging',
+            [
+                'name' => $this->argument('name'),
+            ]
+        );
     }
 
     private function copySkeleton(): void
