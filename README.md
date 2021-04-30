@@ -17,10 +17,18 @@ composer require dptsi/laravel-modular
 
 ## Usage
 
-To create a new module, run:
+1. (Optional)To change application namespace, run:
 
-```shell
-php artisan module:make ModuleName
-```
+    ```shell
+    php artisan app:name Custom\Namespace
+    ```
 
-Note: Module name must be in studly case
+    Note: All namespace inside app directory (app/) will change into custom namespace
+
+2. To create a new module, run:
+
+    ```shell
+    php artisan module:make ModuleName
+    ```
+
+    Note: Module name must be in studly case
