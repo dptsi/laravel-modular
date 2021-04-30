@@ -152,23 +152,23 @@ class ModuleMakeCommand extends GeneratorCommand
         $module_config = require config_path('modules.php');
 
         $module_config['modules'][Str::snake($this->argument('name'))] = [
-            'module_class' => 'App\\Modules\\'.Str::studly($this->argument('name')).'\\Module',
+            'module_class' => '\\App\\Modules\\'.Str::studly($this->argument('name')).'\\Module',
             'enabled' => true,
         ];
 
         ob_start();
         echo "<?php\n\n";
         echo "return [\n";
-        if ($module_config['default_module']) {
-            echo "\n\t'default_module' => '{$module_config['default_module']}',";
-        } else {
-            echo "\n\t'default_module' => null,";
-        }
+        echo "\n\t'default_module' => ";
+        echo $module_config['default_module'] ? "'{$module_config['default_module']}'" : 'null';
+        echo ",";
         echo "\n\t'modules' => [";
         foreach ($module_config['modules'] as $key => $value) {
             echo "\n\t\t'{$key}' => [";
                 echo "\n\t\t\t'module_class' => '{$value['module_class']}',";
-                echo "\n\t\t\t'enabled' => {$value['enabled']},";
+                echo "\n\t\t\t'enabled' => ";
+                echo $value['enabled'] ? 'true' : 'false';
+                echo ",";
             echo "\n\t\t],";
         }
         echo "\n\t],\n];";
