@@ -131,6 +131,13 @@ class ModuleMakeCommand extends GeneratorCommand
                 'name' => $this->argument('name'),
             ]
         );
+        $this->call(
+            'module:provide-event',
+            [
+                'name' => $this->argument('name'),
+                '--skeleton' => $this->option('skeleton'),
+            ]
+        );
     }
 
     private function copySkeleton(): void
