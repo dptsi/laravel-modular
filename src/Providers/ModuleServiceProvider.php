@@ -10,6 +10,7 @@ use Dptsi\Modular\Console\ModuleProvideDatabaseCommand;
 use Dptsi\Modular\Console\ModuleProvideDependencyCommand;
 use Dptsi\Modular\Console\ModuleProvideEventCommand;
 use Dptsi\Modular\Console\ModuleProvideLangCommand;
+use Dptsi\Modular\Console\ModuleProvideMessagingCommand;
 use Dptsi\Modular\Console\ModuleProvideRouteCommand;
 use Dptsi\Modular\Console\ModuleProvideViewCommand;
 use Dptsi\Modular\Core\Manager;
@@ -69,6 +70,7 @@ class ModuleServiceProvider extends ServiceProvider
                     ModuleProvideDependencyCommand::class,
                     ModuleMessagingTableCommand::class,
                     ModuleProvideEventCommand::class,
+                    ModuleProvideMessagingCommand::class,
                 ]
             );
         }
