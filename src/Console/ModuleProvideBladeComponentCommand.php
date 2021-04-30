@@ -4,7 +4,6 @@
 namespace Dptsi\Modular\Console;
 
 
-use Dptsi\Modular\Traits\AppNamespaceDetectorTrait;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
@@ -12,8 +11,6 @@ use Symfony\Component\Console\Input\InputOption;
 
 class ModuleProvideBladeComponentCommand extends GeneratorCommand
 {
-    use AppNamespaceDetectorTrait;
-
     protected $name = 'module:provide-blade';
 
     protected $description = 'Generate blade service provider for a module';
@@ -25,11 +22,11 @@ class ModuleProvideBladeComponentCommand extends GeneratorCommand
         $namespace = null;
         switch ($this->option('skeleton')) {
             case 'onion':
-                $namespace = $this->getAppNamespace() . '\\Modules\\\\' . Str::studly($this->argument('name')) . '\\\\Presentation\\\\Components';
+                $namespace = str_replace('\\', '\\\\', $this->laravel->getNamespace()) . 'Modules\\\\' . Str::studly($this->argument('name')) . '\\\\Presentation\\\\Components';
                 break;
             case 'mvc':
             default:
-                $namespace = $this->getAppNamespace() . '\\Modules\\\\' . Str::studly($this->argument('name')) . '\\\\Components';
+                $namespace = str_replace('\\', '\\\\', $this->laravel->getNamespace()) . 'Modules\\\\' . Str::studly($this->argument('name')) . '\\\\Components';
         }
         $stub = str_replace(
             ['{{ SkeletonNamespace }}'],
