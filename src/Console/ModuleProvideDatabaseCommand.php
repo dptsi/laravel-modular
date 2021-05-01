@@ -71,9 +71,9 @@ class ModuleProvideDatabaseCommand extends GeneratorCommand
             return false;
         }
 
-        $module_snake_name = Str::snake($this->argument('name'));
+        $module_name = Str::snake($this->argument('name'));
 
-        $this->files->ensureDirectoryExists(config_path($module_snake_name));
+        $this->files->ensureDirectoryExists(config_path($module_name));
 
         switch ($this->option('database')) {
             case 'mysql':
@@ -89,11 +89,11 @@ class ModuleProvideDatabaseCommand extends GeneratorCommand
 
         $stub = str_replace(
             ['{{ module_name }}'],
-            Str::upper($module_snake_name), $stub
+            Str::upper($module_name), $stub
         );
 
         $this->files->put(
-            config_path($module_snake_name . '/database.php'), $stub
+            config_path($module_name . '/database.php'), $stub
         );
 
         return parent::handle();
