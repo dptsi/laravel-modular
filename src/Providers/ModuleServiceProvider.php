@@ -46,6 +46,7 @@ class ModuleServiceProvider extends ServiceProvider
         $this->publish();
         $this->registerCommands();
         $this->loadModules();
+        $this->bootDefaultModuleAction();
     }
 
     protected function publish()
@@ -99,5 +100,15 @@ class ModuleServiceProvider extends ServiceProvider
                 App::register($provider);
             }
         }
+    }
+
+    protected function bootDefaultModuleAction()
+    {
+        $default_module = ModuleManager::getDefault();
+        if (!$default_module) {
+            return;
+        }
+
+        $default_module->defaultModuleAction();
     }
 }

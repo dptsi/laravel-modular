@@ -19,4 +19,9 @@ class Module extends BaseModule
             \DummyNamespace\Providers\MessagingServiceProvider::class,
         ];
     }
+
+    public function defaultModuleAction(): void
+    {
+
+    }
 }

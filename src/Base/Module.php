@@ -36,12 +36,8 @@ abstract class Module
         return [];
     }
 
-    /**
-     * @return array{?string, ?string}
-     */
-    public function getDefaultControllerAction(): array
+    public function defaultModuleAction(): void
     {
-        return [null, null];
     }
 
     public function isDefault(): bool
