@@ -69,6 +69,13 @@ class ModuleMakeCommand extends GeneratorCommand
                 'Database driver to be applied to the module',
                 'sqlsrv',
             ],
+            [
+                'default',
+                null,
+                InputOption::VALUE_NONE,
+                'Determine if this module is default module',
+                null,
+            ],
         ];
     }
 
@@ -94,8 +101,9 @@ class ModuleMakeCommand extends GeneratorCommand
             $this->files->copy(__DIR__ . '/../config/modules.php', config_path('modules.php'));
 
         $module_config = require config_path('modules.php');
+        $module_name = Str::snake($this->argument('name'));
 
-        $module_config['modules'][Str::snake($this->argument('name'))] = [
+        $module_config['modules'][$module_name] = [
             'module_class' => '\\' . $this->laravel->getNamespace() . 'Modules\\'. Str::studly($this->argument('name')) . '\\Module',
             'enabled' => true,
         ];
@@ -104,7 +112,11 @@ class ModuleMakeCommand extends GeneratorCommand
         echo "<?php\n\n";
         echo "return [\n";
         echo "\n\t'default_module' => ";
-        echo $module_config['default_module'] ? "'{$module_config['default_module']}'" : 'null';
+        if($this->option('default')) {
+            echo "'{$module_name}'";
+        } else {
+            echo $module_config['default_module'] ? "'{$module_config['default_module']}'" : 'null';
+        }
         echo ",";
         echo "\n\t'modules' => [";
         foreach ($module_config['modules'] as $key => $value) {
