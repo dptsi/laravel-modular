@@ -11,7 +11,7 @@ class Manager
     /**
      * @var array<string, Module>
      */
-    private array $modules;
+    private array $modules = [];
 
     public function register(string $module_config_name, Module $module): void
     {
