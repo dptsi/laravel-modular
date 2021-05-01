@@ -8,6 +8,7 @@ use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+use Dptsi\Modular\Facade\ModuleManager;
 
 class ModuleProvideLangCommand extends GeneratorCommand
 {
@@ -17,19 +18,30 @@ class ModuleProvideLangCommand extends GeneratorCommand
 
     protected $type = 'Lang service provider';
 
+    private $lang_path;
+
+    public function setLangPath($lang_path)
+    {
+        $this->lang_path = $lang_path;
+    }
+
+    public function getLangPath()
+    {
+        return $this->lang_path;
+    }
+
     protected function replaceClass($stub, $name)
     {
-        $lang_path = null;
         switch ($this->option('skeleton')) {
             case 'onion':
-                $lang_path = '../Presentation/lang';
+                $this->setLangPath('../Presentation/resources/lang');
                 break;
             case 'mvc':
-                $lang_path = '../resources/lang';
             default:
+                $this->setLangPath('../resources/lang');
         }
 
-        $stub = str_replace(['{{ lang_path }}'], $lang_path, $stub);
+        $stub = str_replace(['{{ lang_path }}'], $this->getLangPath(), $stub);
 
         return str_replace(['{{ module_name }}'], Str::studly($this->argument('name')), $stub);
     }
@@ -83,6 +95,28 @@ class ModuleProvideLangCommand extends GeneratorCommand
             return false;
         }
 
-        return parent::handle();
+        parent::handle();
+
+        $stub_en = $this->files->get(__DIR__ . '/../stubs/skeleton/resources/lang/en/general.stub');
+        $stub_id = $this->files->get(__DIR__ . '/../stubs/skeleton/resources/lang/id/general.stub');
+
+        $stub_en = str_replace(
+            ['{{ module_name }}'],
+            $this->argument('name'), $stub_en
+        );
+        $stub_id = str_replace(
+            ['{{ module_name }}'],
+            $this->argument('name'), $stub_id
+        );
+
+        $path_en = ModuleManager::path($this->argument('name'), str_replace('../', '', $this->getLangPath()) . '/en/general.php');
+        $path_id = ModuleManager::path($this->argument('name'), str_replace('../', '', $this->getLangPath()) . '/id/general.php');
+
+        $this->files->put(
+            $path_en, $stub_en
+        );
+        $this->files->put(
+            $path_id, $stub_id
+        );
     }
 }

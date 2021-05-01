@@ -8,6 +8,7 @@ use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+use Dptsi\Modular\Facade\ModuleManager;
 
 class ModuleProvideRouteCommand extends GeneratorCommand
 {
@@ -17,19 +18,44 @@ class ModuleProvideRouteCommand extends GeneratorCommand
 
     protected $type = 'Route service provider';
 
+    private $controller_path;
+
+    private $route_path;
+
+    public function setControllerPath($controller_path)
+    {
+        $this->controller_path = $controller_path;
+    }
+
+    public function getControllerPath()
+    {
+        return $this->controller_path;
+    }
+
+    public function setRoutePath($route_path)
+    {
+        $this->route_path = $route_path;
+    }
+
+    public function getRoutePath()
+    {
+        return $this->route_path;
+    }
+
     protected function replaceClass($stub, $name)
     {
-        $route_path = null;
         switch ($this->option('skeleton')) {
             case 'onion':
-                $route_path = '../Presentation/routes';
+                $this->setControllerPath('../Presentation/Controllers');
+                $this->setRoutePath('../Presentation/routes');
                 break;
             case 'mvc':
-                $route_path = '../routes';
             default:
+                $this->setControllerPath('../Controllers');
+                $this->setRoutePath('../routes');
         }
 
-        $stub = str_replace(['{{ route_path }}'], $route_path, $stub);
+        $stub = str_replace(['{{ route_path }}'], $this->getRoutePath(), $stub);
 
         return str_replace(['{{ module_name }}'], Str::kebab($this->argument('name')), $stub);
     }
@@ -83,7 +109,39 @@ class ModuleProvideRouteCommand extends GeneratorCommand
             return false;
         }
 
-        return parent::handle();
-    }
+        parent::handle();
 
+        $controller_stub = $this->files->get(__DIR__ . '/../stubs/skeleton/controllers/BaseController.stub');
+
+        $controller_stub = str_replace(
+            ['{{ module_name }}'],
+            $this->argument('name'), $controller_stub
+        );
+
+        $controller_stub = str_replace(
+            ['DummyNamespace'],
+            $this->laravel->getNamespace() . 'Modules\\' . $this->argument('name') . str_replace('/', '\\', str_replace('..', '', $this->getControllerPath())),
+            $controller_stub
+        );
+
+        $controller_path = ModuleManager::path($this->argument('name'), str_replace('../', '', $this->getControllerPath()) . '/BaseController.php');
+
+        $this->files->put(
+            $controller_path, $controller_stub
+        );
+
+        $route_stub = $this->files->get(__DIR__ . '/../stubs/skeleton/routes/web.stub');
+
+        $route_stub = str_replace(
+            ['DummyNamespace'],
+            $this->laravel->getNamespace() . 'Modules\\' . $this->argument('name') . str_replace('/', '\\', str_replace('..', '', $this->getControllerPath())) . '\BaseController',
+            $route_stub
+        );
+
+        $route_path = ModuleManager::path($this->argument('name'), str_replace('../', '', $this->getRoutePath()) . '/web.php');
+
+        $this->files->put(
+            $route_path, $route_stub
+        );
+    }
 }

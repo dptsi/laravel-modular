@@ -25,8 +25,8 @@ class ModuleProvideEventCommand extends GeneratorCommand
                 $event_listeners_path = 'Core/Application/EventListeners';
                 break;
             case 'mvc':
-                $event_listeners_path = 'Listeners';
             default:
+                $event_listeners_path = 'Listeners';
         }
 
         $stub = str_replace(['{{ event_listeners_path }}'], $event_listeners_path, $stub);

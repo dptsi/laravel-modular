@@ -8,6 +8,7 @@ use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+use Dptsi\Modular\Facade\ModuleManager;
 
 class ModuleProvideViewCommand extends GeneratorCommand
 {
@@ -17,19 +18,30 @@ class ModuleProvideViewCommand extends GeneratorCommand
 
     protected $type = 'View service provider';
 
+    private $view_path;
+
+    public function setViewPath($view_path)
+    {
+        $this->view_path = $view_path;
+    }
+
+    public function getViewPath()
+    {
+        return $this->view_path;
+    }
+
     protected function replaceClass($stub, $name)
     {
-        $view_path = null;
         switch ($this->option('skeleton')) {
             case 'onion':
-                $view_path = '../Presentation/views';
+                $this->setViewPath('../Presentation/resources/views');
                 break;
             case 'mvc':
-                $view_path = '../resources/views';
+                $this->setViewPath('../resources/views');
             default:
         }
 
-        $stub = str_replace(['{{ view_path }}'], $view_path, $stub);
+        $stub = str_replace(['{{ view_path }}'], $this->getViewPath(), $stub);
 
         return str_replace(['{{ module_name }}'], Str::studly($this->argument('name')), $stub);
     }
@@ -83,6 +95,32 @@ class ModuleProvideViewCommand extends GeneratorCommand
             return false;
         }
 
-        return parent::handle();
+        parent::handle();
+
+        $stub = $this->files->get(__DIR__ . '/../stubs/skeleton/resources/views/welcome.blade.stub');
+
+        $stub = str_replace(
+            ['{{ module_name }}'],
+            $this->argument('name'), $stub
+        );
+
+        $path = ModuleManager::path($this->argument('name'), str_replace('../', '', $this->getViewPath()) . '/welcome.blade.php');
+
+        $this->files->put(
+            $path, $stub
+        );
+
+        $stub = $this->files->get(__DIR__ . '/../stubs/skeleton/resources/views/components/alert.blade.stub');
+
+        $stub = str_replace(
+            ['{{ module_name }}'],
+            $this->argument('name'), $stub
+        );
+
+        $path = ModuleManager::path($this->argument('name'), str_replace('../', '', $this->getViewPath()) . '/components/alert.blade.php');
+
+        $this->files->put(
+            $path, $stub
+        );
     }
 }
