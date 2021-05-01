@@ -8,6 +8,7 @@ use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+use Dptsi\Modular\Facade\ModuleManager;
 
 class ModuleProvideBladeComponentCommand extends GeneratorCommand
 {
@@ -17,20 +18,45 @@ class ModuleProvideBladeComponentCommand extends GeneratorCommand
 
     protected $type = 'Blade service provider';
 
+    private $component_path;
+
+    private $component_namespace;
+
+    public function setComponentPath($component_path)
+    {
+        $this->component_path = $component_path;
+    }
+
+    public function getComponentPath()
+    {
+        return $this->component_path;
+    }
+
+    public function setComponentNamespace($component_namespace)
+    {
+        $this->component_namespace = $component_namespace;
+    }
+
+    public function getComponentNamespace()
+    {
+        return $this->component_namespace;
+    }
+
     protected function replaceClass($stub, $name)
     {
-        $namespace = null;
         switch ($this->option('skeleton')) {
             case 'onion':
-                $namespace = str_replace('\\', '\\\\', $this->laravel->getNamespace()) . 'Modules\\\\' . Str::studly($this->argument('name')) . '\\\\Presentation\\\\Components';
+                $this->setComponentNamespace(str_replace('\\', '\\\\', $this->laravel->getNamespace()) . 'Modules\\\\' . Str::studly($this->argument('name')) . '\\\\Presentation\\\\Components');
+                $this->setComponentPath('../Presentation/Components');
                 break;
             case 'mvc':
             default:
-                $namespace = str_replace('\\', '\\\\', $this->laravel->getNamespace()) . 'Modules\\\\' . Str::studly($this->argument('name')) . '\\\\Components';
+                $this->setComponentNamespace(str_replace('\\', '\\\\', $this->laravel->getNamespace()) . 'Modules\\\\' . Str::studly($this->argument('name')) . '\\\\Components');
+                $this->setComponentPath('../Components');
         }
         $stub = str_replace(
             ['{{ SkeletonNamespace }}'],
-            $namespace,
+            $this->getComponentNamespace(),
             $stub
         );
         return str_replace(['{{ module_name }}'], Str::studly($this->argument('name')), $stub);
@@ -85,7 +111,25 @@ class ModuleProvideBladeComponentCommand extends GeneratorCommand
             return false;
         }
 
-        return parent::handle();
+        parent::handle();
+
+        $stub = $this->files->get(__DIR__ . '/../stubs/skeleton/components/Alert.stub');
+
+        $stub = str_replace(
+            ['{{ module_name }}'],
+            $this->argument('name'), $stub
+        );
+
+        $stub = str_replace(
+            ['DummyNamespace'],
+            str_replace('\\\\', '\\', $this->getComponentNamespace()), $stub
+        );
+
+        $path = ModuleManager::path($this->argument('name'), str_replace('../', '', $this->getComponentPath()) . '/Alert.php');
+
+        $this->files->put(
+            $path, $stub
+        );
     }
 
 }

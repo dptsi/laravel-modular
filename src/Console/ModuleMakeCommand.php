@@ -133,16 +133,17 @@ class ModuleMakeCommand extends GeneratorCommand
             $source_dir = $skeleton_dir . '/' . $dir;
             $this->files->copyDirectory($source_dir, $module_path . '/' . $dir);
         }
+        // $this->createControllerExample();
     }
 
     private function generateTemplate(): void
     {
-        $this->createRouteExample();
-        $this->createControllerExample();
-        $this->createLangExample();
-        $this->createViewExample();
-        $this->createBladeComponentExample();
-        $this->createViewComponentExample();
+        // $this->createRouteExample();
+        // $this->createControllerExample();
+        // $this->createLangExample();
+        // $this->createViewExample();
+        // $this->createBladeComponentExample();
+        // $this->createViewComponentExample();
     }
 
     private function createRouteExample(): void
@@ -177,7 +178,14 @@ class ModuleMakeCommand extends GeneratorCommand
             $this->laravel->getNamespace() . 'Modules\\' . $this->argument('name') . '\Controllers', $stub
         );
 
-        $path = ModuleManager::path($this->argument('name'), 'Controllers/BaseController.php');
+        switch ($this->option('skeleton')) {
+            case 'onion':
+                $path = ModuleManager::path($this->argument('name'), 'Presentation/Controllers/BaseController.php');
+                break;
+            case 'mvc':
+            default:
+                $path = ModuleManager::path($this->argument('name'), 'Controllers/BaseController.php');
+        }
 
         $this->files->put(
             $path, $stub
