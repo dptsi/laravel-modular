@@ -3,6 +3,7 @@
 namespace DummyNamespace;
 
 use Dptsi\Modular\Base\Module as BaseModule;
+use Illuminate\Support\Facades\Route;
 
 class Module extends BaseModule
 {
@@ -22,6 +23,6 @@ class Module extends BaseModule
 
     public function defaultModuleAction(): void
     {
-
+        // Route::get('/', [BaseController::class, 'index']);
     }
 }
