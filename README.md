@@ -17,7 +17,7 @@ composer require dptsi/laravel-modular
 
 ## Usage
 
-1. (Optional)To change application namespace, run:
+1. (Optional) To change application namespace, run:
 
     ```shell
     php artisan app:name Custom\Namespace
@@ -31,4 +31,18 @@ composer require dptsi/laravel-modular
     php artisan module:make ModuleName
     ```
 
-    Note: Module name must be in studly case
+    This will create a new module using mvc skeleton and sqlsrv database configuration.
+
+    Note: the module name must be in StudlyCase
+    
+3. If you want to create a new modul using onion skeleton, run:
+
+    ```shell
+    php artisan module:make ModuleName --skeleton=onion
+    ```
+ 
+3. If you want to create a new modul using mysql database configuration, run:
+
+    ```shell
+    php artisan module:make ModuleName --database=onion
+    ```
