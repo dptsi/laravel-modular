@@ -8,7 +8,7 @@ use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
-use Dptsi\Modular\Facade\ModuleManager;
+use Dptsi\Modular\Facade\Module;
 
 class ModuleProvideViewCommand extends GeneratorCommand
 {
@@ -104,7 +104,7 @@ class ModuleProvideViewCommand extends GeneratorCommand
             $this->argument('name'), $stub
         );
 
-        $path = ModuleManager::path($this->argument('name'), str_replace('../', '', $this->getViewPath()) . '/welcome.blade.php');
+        $path = Module::path($this->argument('name'), str_replace('../', '', $this->getViewPath()) . '/welcome.blade.php');
 
         $this->files->put(
             $path, $stub
@@ -117,7 +117,7 @@ class ModuleProvideViewCommand extends GeneratorCommand
             $this->argument('name'), $stub
         );
 
-        $path = ModuleManager::path($this->argument('name'), str_replace('../', '', $this->getViewPath()) . '/components/alert.blade.php');
+        $path = Module::path($this->argument('name'), str_replace('../', '', $this->getViewPath()) . '/components/alert.blade.php');
 
         $this->files->put(
             $path, $stub

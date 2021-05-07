@@ -2,7 +2,7 @@
 
 namespace Dptsi\Modular\Providers;
 
-use Dptsi\Modular\Base\Module;
+use Dptsi\Modular\Base\BaseModule;
 use Dptsi\Modular\Console\ChangeAppNameCommand;
 use Dptsi\Modular\Console\ModuleMakeCommand;
 use Dptsi\Modular\Console\ModuleMessagingTableCommand;
@@ -14,11 +14,11 @@ use Dptsi\Modular\Console\ModuleProvideLangCommand;
 use Dptsi\Modular\Console\ModuleProvideMessagingCommand;
 use Dptsi\Modular\Console\ModuleProvideRouteCommand;
 use Dptsi\Modular\Console\ModuleProvideViewCommand;
-use Dptsi\Modular\Core\Manager;
+use Dptsi\Modular\Core\ModuleManager;
 use Dptsi\Modular\Event\EventManager;
-use Dptsi\Modular\Exception\InvalidModuleClass;
-use Dptsi\Modular\Facade\ModuleManager;
 use Dptsi\Modular\Messaging\MessageBus;
+use Dptsi\Modular\Exception\InvalidModuleClass;
+use Dptsi\Modular\Facade\Module;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
@@ -31,8 +31,8 @@ class ModuleServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('module_manager', Manager::class);
-        $this->app->singleton('event_manager', EventManager::class);
+        $this->app->singleton('module', ModuleManager::class);
+        $this->app->singleton('event', EventManager::class);
         $this->app->singleton('message_bus', MessageBus::class);
     }
 
@@ -90,11 +90,11 @@ class ModuleServiceProvider extends ServiceProvider
                 $module_properties,
                 $module_name == config('modules.default_module')
             );
-            if (!($module instanceof Module)) {
+            if (!($module instanceof BaseModule)) {
                 throw new InvalidModuleClass();
             }
 
-            ModuleManager::register($module_name, $module);
+            Module::register($module_name, $module);
 
             foreach ($module->getProviders() as $provider) {
                 App::register($provider);
@@ -104,7 +104,7 @@ class ModuleServiceProvider extends ServiceProvider
 
     protected function bootDefaultModuleAction()
     {
-        $default_module = ModuleManager::getDefault();
+        $default_module = Module::getDefault();
         if (!$default_module) {
             return;
         }

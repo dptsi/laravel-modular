@@ -2,7 +2,7 @@
 
 namespace DummyNamespace;
 
-use Dptsi\Modular\Facade\ModuleManager;
+use Dptsi\Modular\Facade\Module;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -19,7 +19,7 @@ class EventServiceProvider extends ServiceProvider
     protected function discoverEventsWithin()
     {
         return [
-            ModuleManager::path('{{ module_name }}', '{{ event_listeners_path }}'),
+            Module::path('{{ module_name }}', '{{ event_listeners_path }}'),
         ];
     }
 }

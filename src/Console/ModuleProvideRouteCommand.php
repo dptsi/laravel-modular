@@ -8,7 +8,7 @@ use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
-use Dptsi\Modular\Facade\ModuleManager;
+use Dptsi\Modular\Facade\Module;
 
 class ModuleProvideRouteCommand extends GeneratorCommand
 {
@@ -124,7 +124,7 @@ class ModuleProvideRouteCommand extends GeneratorCommand
             $controller_stub
         );
 
-        $controller_path = ModuleManager::path($this->argument('name'), str_replace('../', '', $this->getControllerPath()) . '/BaseController.php');
+        $controller_path = Module::path($this->argument('name'), str_replace('../', '', $this->getControllerPath()) . '/BaseController.php');
 
         $this->files->put(
             $controller_path, $controller_stub
@@ -138,7 +138,7 @@ class ModuleProvideRouteCommand extends GeneratorCommand
             $route_stub
         );
 
-        $route_path = ModuleManager::path($this->argument('name'), str_replace('../', '', $this->getRoutePath()) . '/web.php');
+        $route_path = Module::path($this->argument('name'), str_replace('../', '', $this->getRoutePath()) . '/web.php');
 
         $this->files->put(
             $route_path, $route_stub

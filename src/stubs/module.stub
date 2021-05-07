@@ -2,7 +2,7 @@
 
 namespace DummyNamespace;
 
-use Dptsi\Modular\Base\Module as BaseModule;
+use Dptsi\Modular\Base\BaseModule;
 use Illuminate\Support\Facades\Route;
 
 class Module extends BaseModule

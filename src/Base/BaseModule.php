@@ -4,7 +4,7 @@
 namespace Dptsi\Modular\Base;
 
 
-abstract class Module
+abstract class BaseModule
 {
     protected array $module_config;
     protected bool $default;
