@@ -8,7 +8,7 @@ use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
-use Dptsi\Modular\Facade\ModuleManager;
+use Dptsi\Modular\Facade\Module;
 
 class ModuleProvideBladeComponentCommand extends GeneratorCommand
 {
@@ -125,7 +125,7 @@ class ModuleProvideBladeComponentCommand extends GeneratorCommand
             str_replace('\\\\', '\\', $this->getComponentNamespace()), $stub
         );
 
-        $path = ModuleManager::path($this->argument('name'), str_replace('../', '', $this->getComponentPath()) . '/Alert.php');
+        $path = Module::path($this->argument('name'), str_replace('../', '', $this->getComponentPath()) . '/Alert.php');
 
         $this->files->put(
             $path, $stub

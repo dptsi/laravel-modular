@@ -8,7 +8,7 @@ use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
-use Dptsi\Modular\Facade\ModuleManager;
+use Dptsi\Modular\Facade\Module;
 
 class ModuleProvideLangCommand extends GeneratorCommand
 {
@@ -109,8 +109,8 @@ class ModuleProvideLangCommand extends GeneratorCommand
             $this->argument('name'), $stub_id
         );
 
-        $path_en = ModuleManager::path($this->argument('name'), str_replace('../', '', $this->getLangPath()) . '/en/general.php');
-        $path_id = ModuleManager::path($this->argument('name'), str_replace('../', '', $this->getLangPath()) . '/id/general.php');
+        $path_en = Module::path($this->argument('name'), str_replace('../', '', $this->getLangPath()) . '/en/general.php');
+        $path_id = Module::path($this->argument('name'), str_replace('../', '', $this->getLangPath()) . '/id/general.php');
 
         $this->files->put(
             $path_en, $stub_en
