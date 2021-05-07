@@ -31,8 +31,8 @@ class ModuleServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('module', ModuleManager::class);
-        $this->app->singleton('event', EventManager::class);
+        $this->app->singleton('module_manager', ModuleManager::class);
+        $this->app->singleton('event_manager', EventManager::class);
         $this->app->singleton('message_bus', MessageBus::class);
     }
 
