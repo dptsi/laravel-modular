@@ -44,5 +44,5 @@ composer require dptsi/laravel-modular
 3. If you want to create a new modul using mysql database configuration, run:
 
     ```shell
-    php artisan module:make ModuleName --database=onion
+    php artisan module:make ModuleName --database=mysql
     ```
