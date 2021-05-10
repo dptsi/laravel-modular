@@ -43,19 +43,9 @@ class ModuleServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publish();
         $this->registerCommands();
         $this->loadModules();
         $this->bootDefaultModuleAction();
-    }
-
-    protected function publish()
-    {
-        $this->publishes(
-            [
-                __DIR__ . '/../config/modules.php' => config_path('modules.php'),
-            ]
-        );
     }
 
     protected function registerCommands()
