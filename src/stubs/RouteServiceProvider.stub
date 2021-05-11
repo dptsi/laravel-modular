@@ -2,22 +2,28 @@
 
 namespace DummyNamespace;
 
+use ControllerNamespace;
+use Dptsi\Modular\Facade\Module;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {
+    protected string $prefix = '{{ module_name }}';
     protected string $module_name = '{{ module_name }}';
     protected string $route_path = '{{ route_path }}';
 
     public function boot()
     {
-        Route::prefix('api/' . $this->module_name)
+        if (Module::get($this->module_name)->isDefault())
+             Route::middleware('web')->get('/', [BaseController::class, 'index']);
+
+        Route::prefix('api/' . $this->prefix)
             ->middleware('api')
             ->group(__DIR__ . '/' . $this->route_path . '/api.php');
 
         Route::middleware('web')
-            ->prefix("{$this->module_name}")
+            ->prefix("{$this->prefix}")
             ->group(__DIR__ . '/' . $this->route_path . '/web.php');
     }
 }

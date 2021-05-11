@@ -55,9 +55,13 @@ class ModuleProvideRouteCommand extends GeneratorCommand
                 $this->setRoutePath('../routes');
         }
 
+        $stub = str_replace(['ControllerNamespace'], $this->laravel->getNamespace() . 'Modules\\' . $this->argument('name') . str_replace('/', '\\', str_replace('..', '', $this->getControllerPath())) . '\BaseController', $stub);
+        $stub = str_replace(['{{ prefix }}'], Str::kebab($this->argument('name')), $stub);
+        $stub = str_replace(['{{ module_name }}'], Str::snake($this->argument('name')), $stub);
         $stub = str_replace(['{{ route_path }}'], $this->getRoutePath(), $stub);
 
-        return str_replace(['{{ module_name }}'], Str::kebab($this->argument('name')), $stub);
+
+        return $stub;
     }
 
     protected function getStub()
