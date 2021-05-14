@@ -36,10 +36,6 @@ abstract class BaseModule
         return [];
     }
 
-    public function defaultModuleAction(): void
-    {
-    }
-
     public function isDefault(): bool
     {
         return $this->default;
