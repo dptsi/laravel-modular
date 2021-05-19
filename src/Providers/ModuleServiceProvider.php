@@ -19,7 +19,6 @@ use Dptsi\Modular\Event\EventManager;
 use Dptsi\Modular\Messaging\MessageBus;
 use Dptsi\Modular\Exception\InvalidModuleClass;
 use Dptsi\Modular\Facade\Module;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
 class ModuleServiceProvider extends ServiceProvider
@@ -34,6 +33,7 @@ class ModuleServiceProvider extends ServiceProvider
         $this->app->singleton('module_manager', ModuleManager::class);
         $this->app->singleton('event_manager', EventManager::class);
         $this->app->singleton('message_bus', MessageBus::class);
+        $this->loadModules();
     }
 
     /**
@@ -44,7 +44,6 @@ class ModuleServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerCommands();
-        $this->loadModules();
     }
 
     protected function registerCommands()
@@ -86,7 +85,7 @@ class ModuleServiceProvider extends ServiceProvider
             Module::register($module_name, $module);
 
             foreach ($module->getProviders() as $provider) {
-                App::register($provider);
+                $this->app->register($provider);
             }
         }
     }
