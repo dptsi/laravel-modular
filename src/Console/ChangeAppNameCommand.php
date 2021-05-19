@@ -154,6 +154,7 @@ class ChangeAppNameCommand extends Command
         $this->setAppConfigNamespaces();
         $this->setAuthConfigNamespace();
         $this->setServicesConfigNamespace();
+        $this->setModulesConfigNamespace();
     }
 
     /**
@@ -201,6 +202,20 @@ class ChangeAppNameCommand extends Command
             $this->getConfigPath('services'),
             $this->currentRoot.'\\User',
             $this->argument('name').'\\User'
+        );
+    }
+
+    /**
+     * Set the modules config namespace.
+     *
+     * @return void
+     */
+    protected function setModulesConfigNamespace()
+    {
+        $this->replaceIn(
+            $this->getConfigPath('modules'),
+            '\\'.$this->currentRoot,
+            '\\'.$this->argument('name')
         );
     }
 
