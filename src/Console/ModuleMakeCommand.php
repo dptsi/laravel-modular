@@ -23,6 +23,11 @@ class ModuleMakeCommand extends GeneratorCommand
         return $stub;
     }
 
+    protected function getNameInput()
+    {
+        return Str::studly(trim($this->argument('name')));
+    }
+
     protected function getStub()
     {
         return __DIR__ . '/../stubs/module.stub';
@@ -101,10 +106,10 @@ class ModuleMakeCommand extends GeneratorCommand
             $this->files->copy(__DIR__ . '/../config/modules.php', config_path('modules.php'));
 
         $module_config = require config_path('modules.php');
-        $module_name = Str::snake($this->argument('name'));
+        $module_name = Str::snake($this->getNameInput());
 
         $module_config['modules'][$module_name] = [
-            'module_class' => '\\' . $this->laravel->getNamespace() . 'Modules\\'. Str::studly($this->argument('name')) . '\\Module',
+            'module_class' => '\\' . $this->laravel->getNamespace() . 'Modules\\'. $this->getNameInput() . '\\Module',
             'enabled' => true,
         ];
 
@@ -138,7 +143,7 @@ class ModuleMakeCommand extends GeneratorCommand
     private function copySkeleton(): void
     {
         $skeleton_dir = __DIR__ . '/../Skeleton/' . Str::studly($this->option('skeleton'));
-        $module_path = Module::path($this->argument('name'), '');
+        $module_path = Module::path($this->getNameInput(), '');
         foreach (scandir($skeleton_dir) as $dir) {
             if (in_array($dir, ['.', '..'])) continue;
             $source_dir = $skeleton_dir . '/' . $dir;
@@ -151,55 +156,55 @@ class ModuleMakeCommand extends GeneratorCommand
         $this->call(
             'module:provide-route',
             [
-                'name' => $this->argument('name'),
+                'name' => $this->getNameInput(),
                 '--skeleton' => $this->option('skeleton'),
             ]
         );
         $this->call(
             'module:provide-database',
             [
-                'name' => $this->argument('name'),
+                'name' => $this->getNameInput(),
                 '--database' => $this->option('database'),
             ]
         );
         $this->call(
             'module:provide-view',
             [
-                'name' => $this->argument('name'),
+                'name' => $this->getNameInput(),
                 '--skeleton' => $this->option('skeleton'),
             ]
         );
         $this->call(
             'module:provide-lang',
             [
-                'name' => $this->argument('name'),
+                'name' => $this->getNameInput(),
                 '--skeleton' => $this->option('skeleton'),
             ]
         );
         $this->call(
             'module:provide-blade',
             [
-                'name' => $this->argument('name'),
+                'name' => $this->getNameInput(),
                 '--skeleton' => $this->option('skeleton'),
             ]
         );
         $this->call(
             'module:provide-dependency',
             [
-                'name' => $this->argument('name'),
+                'name' => $this->getNameInput(),
             ]
         );
         $this->call(
             'module:provide-event',
             [
-                'name' => $this->argument('name'),
+                'name' => $this->getNameInput(),
                 '--skeleton' => $this->option('skeleton'),
             ]
         );
         $this->call(
             'module:provide-messaging',
             [
-                'name' => $this->argument('name'),
+                'name' => $this->getNameInput(),
             ]
         );
     }
