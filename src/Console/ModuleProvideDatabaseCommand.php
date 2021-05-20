@@ -11,6 +11,8 @@ use Symfony\Component\Console\Input\InputOption;
 
 class ModuleProvideDatabaseCommand extends GeneratorCommand
 {
+    protected $hidden = true;
+
     protected $name = 'module:provide-database';
 
     protected $description = 'Generate database service provider for a module';

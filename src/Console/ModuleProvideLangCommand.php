@@ -12,6 +12,8 @@ use Dptsi\Modular\Facade\Module;
 
 class ModuleProvideLangCommand extends GeneratorCommand
 {
+    protected $hidden = true;
+
     protected $name = 'module:provide-lang';
 
     protected $description = 'Generate lang service provider for a module';

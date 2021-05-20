@@ -10,6 +10,8 @@ use Symfony\Component\Console\Input\InputArgument;
 
 class ModuleProvideMessagingCommand extends GeneratorCommand
 {
+    protected $hidden = true;
+
     protected $name = 'module:provide-messaging';
 
     protected $description = 'Generate messaging service provider for a module';
