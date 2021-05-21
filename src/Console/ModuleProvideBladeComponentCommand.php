@@ -12,6 +12,8 @@ use Dptsi\Modular\Facade\Module;
 
 class ModuleProvideBladeComponentCommand extends GeneratorCommand
 {
+    protected $hidden = true;
+
     protected $name = 'module:provide-blade';
 
     protected $description = 'Generate blade service provider for a module';

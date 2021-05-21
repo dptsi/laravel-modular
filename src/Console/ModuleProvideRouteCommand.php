@@ -12,6 +12,8 @@ use Dptsi\Modular\Facade\Module;
 
 class ModuleProvideRouteCommand extends GeneratorCommand
 {
+    protected $hidden = true;
+
     protected $name = 'module:provide-route';
 
     protected $description = 'Generate route service provider for a module';

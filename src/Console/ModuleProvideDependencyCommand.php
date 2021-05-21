@@ -10,6 +10,8 @@ use Symfony\Component\Console\Input\InputArgument;
 
 class ModuleProvideDependencyCommand extends GeneratorCommand
 {
+    protected $hidden = true;
+
     protected $name = 'module:provide-dependency';
 
     protected $description = 'Generate dependency service provider for a module';

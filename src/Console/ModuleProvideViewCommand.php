@@ -12,6 +12,8 @@ use Dptsi\Modular\Facade\Module;
 
 class ModuleProvideViewCommand extends GeneratorCommand
 {
+    protected $hidden = true;
+
     protected $name = 'module:provide-view';
 
     protected $description = 'Generate view service provider for a module';

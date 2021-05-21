@@ -12,6 +12,8 @@ use Illuminate\Support\Str;
 
 class ModuleMessagingTableCommand extends Command
 {
+    protected $hidden = true;
+
     /**
      * The console command name.
      *

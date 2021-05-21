@@ -11,6 +11,8 @@ use Symfony\Component\Console\Input\InputOption;
 
 class ModuleProvideEventCommand extends GeneratorCommand
 {
+    protected $hidden = true;
+
     protected $name = 'module:provide-event';
 
     protected $description = 'Generate event service provider for a module';
