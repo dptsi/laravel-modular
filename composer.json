@@ -2,7 +2,6 @@
   "name": "dptsi/laravel-modular",
   "description": "Laravel modular template developed for DPTSI projects",
   "type": "library",
-
   "authors": [
     {
       "name": "DPTSI ITS",
@@ -11,9 +10,9 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "php": "^7.4|8.0.*",
+    "php": "^8.0.2",
     "ext-pdo": "*",
-    "laravel/framework": "^8.12"
+    "laravel/framework": "^8.12|^9.0"
   },
   "autoload": {
     "psr-4": {
