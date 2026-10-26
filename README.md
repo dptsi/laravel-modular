@@ -4,8 +4,8 @@ A package to generate modules for a Laravel project.
 
 ## Requirements
 
-1. PHP 7.4 or greater
-2. Laravel version 8
+1. PHP 7.4 or greater (compatible up to PHP 8.5)
+2. Laravel version 8 - 13
 
 ## Installation
 
